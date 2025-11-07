@@ -42,9 +42,13 @@ const AdminReservations = () => {
     }
   };
 
-  useEffect(() => {
+/*   useEffect(() => {
     fetchReservations();
-  }, []);
+  }, []); */
+
+  useEffect(() => {
+  fetchReservations();
+}, [fetchReservations]);
 
   // ✅ Filtrage dynamique
   useEffect(() => {

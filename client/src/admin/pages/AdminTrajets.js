@@ -7,8 +7,6 @@ import {
   Edit,
   RefreshCw,
   Bus,
-  MapPin,
-  DollarSign,
   Loader2,
   Save,
 } from "lucide-react";
@@ -44,9 +42,13 @@ const AdminTrajets = () => {
     }
   };
 
-  useEffect(() => {
+ /*  useEffect(() => {
     fetchTrajets();
-  }, []);
+  }, []); */
+
+  useEffect(() => {
+  fetchTrajets();
+}, [fetchTrajets]);
 
   // ✅ Gérer les changements de champs
   const handleChange = (e) => {

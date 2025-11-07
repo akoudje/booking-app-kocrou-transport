@@ -2,12 +2,8 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 
-// 🌍 Base API URL : dynamique selon l'environnement
-const API_BASE =
-  process.env.REACT_APP_API_URL ||
-  (process.env.NODE_ENV === "production"
-    ? "https://booking-app-kocrou-transport-server.onrender.com"
-    : "http://localhost:5000");
+// 🌍 Base API URL : priorise .env, sinon fallback local
+const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
 // 🧩 Configuration Axios par défaut
 const api = axios.create({
@@ -30,7 +26,6 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Si pas de réponse (ex: backend down)
     if (!error.response) {
       Swal.fire({
         icon: "error",
@@ -47,7 +42,6 @@ api.interceptors.response.use(
       error.response.data?.message ||
       "Une erreur est survenue lors de la communication avec le serveur.";
 
-    // 🔐 Token expiré ou invalide
     if (status === 401) {
       Swal.fire({
         icon: "warning",
@@ -59,20 +53,14 @@ api.interceptors.response.use(
         localStorage.removeItem("user");
         window.location.href = "/admin-login";
       });
-    }
-
-    // 🔍 Ressource non trouvée
-    else if (status === 404) {
+    } else if (status === 404) {
       Swal.fire({
         icon: "info",
         title: "Non trouvé",
         text: "La ressource demandée est introuvable.",
         confirmButtonColor: "#2563eb",
       });
-    }
-
-    // ⚙️ Erreur serveur
-    else if (status >= 500) {
+    } else if (status >= 500) {
       Swal.fire({
         icon: "error",
         title: "Erreur serveur",

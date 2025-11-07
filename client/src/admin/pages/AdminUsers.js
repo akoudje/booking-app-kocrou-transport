@@ -44,9 +44,13 @@ const AdminUsers = () => {
     }
   };
 
-  useEffect(() => {
+/*   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, []); */
+
+  useEffect(() => {
+  fetchUsers();
+}, [fetchUsers]);
 
   // ✅ Filtrage et tri
   useEffect(() => {

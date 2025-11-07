@@ -23,12 +23,17 @@ dotenv.config();
 
 // ⚙️ Initialisation d’Express
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL || "*", // à personnaliser pour Railway
+  credentials: true,
+}));
 app.use(bodyParser.json());
 app.use(express.json());
-app.use("/uploads", express.static("uploads")); // pour les fichiers uploadés (logos, etc.)
 
-// 🔗 Connexion MongoDB (avec surveillance en temps réel)
+// 📁 Gestion des fichiers statiques (à éviter sur Railway)
+app.use("/uploads", express.static("uploads"));
+
+// 🔗 Connexion MongoDB
 connectDB();
 
 // 🔸 Route test
@@ -47,18 +52,16 @@ app.use("/api/users", usersRoutes);
 
 // 🧱 Serveur HTTP + Socket.io
 const server = http.createServer(app);
-
 const io = new Server(server, {
-  cors: { origin: "*", methods: ["GET", "POST"] },
+  cors: {
+    origin: process.env.FRONTEND_URL || "*",
+    methods: ["GET", "POST"],
+  },
 });
-
-// 🌐 Sauvegarde du socket global
 global._io = io;
 
-// ⚡ Connexions Socket.io
 io.on("connection", (socket) => {
   console.log("🟢 Client connecté au WebSocket");
-
   socket.on("disconnect", () => {
     console.log("🔴 Client déconnecté");
   });
@@ -76,5 +79,5 @@ app.use((err, req, res, next) => {
 // 🚀 Démarrage du serveur HTTP
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () =>
-  console.log(`🚀 Serveur + WebSocket en ligne sur http://localhost:${PORT}`)
+  console.log(`🚀 Serveur + WebSocket en ligne sur port ${PORT}`)
 );
