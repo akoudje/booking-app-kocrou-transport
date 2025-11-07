@@ -48,13 +48,9 @@ const AdminReports = () => {
     }
   };
 
- /*  useEffect(() => {
+  useEffect(() => {
     fetchReport();
-  }, [monthFilter]); */
-
-    useEffect(() => {
-    fetchReport();
-  }, [fetchReport);
+  }, [monthFilter]);
 
   // 📊 Génération Excel
   const exportToExcel = () => {
