@@ -5,7 +5,7 @@ import axios from "axios";
 const API_BASE =
   process.env.REACT_APP_API_URL ||
   (process.env.NODE_ENV === "production"
-    ? "https://kocrou-transport-server.onrender.com" // ← ton URL Render backend
+    ? "https://booking-app-kocrou-transport-server.onrender.com" // ✅ URL corrigée
     : "http://localhost:5000");
 
 // 🧩 Configuration Axios par défaut
@@ -26,3 +26,4 @@ api.interceptors.request.use((config) => {
 });
 
 export default api;
+

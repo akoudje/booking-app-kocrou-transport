@@ -343,7 +343,7 @@ const AdminTrajets = () => {
                         <td className="py-3 px-4">{t.compagnie}</td>
                         <td className="py-3 px-4 flex items-center gap-2">
                           <Bus className="w-4 h-4 text-primary" />
-                          {t.lignePrincipale.depart} → {t.lignePrincipale.arrivee}
+                          {t.lignePrincipale?.depart || "?"} → {t.lignePrincipale?.arrivee || "?"}
                         </td>
                         <td className="py-3 px-4 text-center text-primary font-semibold">
                           {t.prixTotal.toLocaleString()} FCFA
