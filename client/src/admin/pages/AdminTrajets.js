@@ -28,27 +28,20 @@ const AdminTrajets = () => {
   const token = localStorage.getItem("token");
 
   // ✅ Charger les trajets
-  const fetchTrajets = async () => {
+ const fetchTrajets = useCallback(async () => {
     try {
-      setLoading(true);
       const { data } = await api.get("/trajets", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTrajets(data);
     } catch (err) {
       console.error("Erreur chargement trajets :", err);
-    } finally {
-      setLoading(false);
     }
-  };
-
- /*  useEffect(() => {
-    fetchTrajets();
-  }, []); */
+  }, [token]);
 
   useEffect(() => {
-  fetchTrajets();
-}, [fetchTrajets]);
+    fetchTrajets();
+  }, [fetchTrajets]);
 
   // ✅ Gérer les changements de champs
   const handleChange = (e) => {

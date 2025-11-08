@@ -28,7 +28,7 @@ const AdminUsers = () => {
   const token = localStorage.getItem("token");
 
   // ✅ Charger tous les utilisateurs
-  const fetchUsers = async () => {
+   const fetchUsers = useCallback(async () => {
     try {
       setLoading(true);
       const { data } = await api.get("/users", {
@@ -42,11 +42,7 @@ const AdminUsers = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-/*   useEffect(() => {
-    fetchUsers();
-  }, []); */
+  });
 
   useEffect(() => {
   fetchUsers();

@@ -26,7 +26,7 @@ const AdminReservations = () => {
   const token = localStorage.getItem("token");
 
   // ✅ Charger toutes les réservations
-  const fetchReservations = async () => {
+   const fetchReservations = useCallback(async () => {
     try {
       setLoading(true);
       const { data } = await api.get("/reservations/all", {
@@ -40,15 +40,13 @@ const AdminReservations = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-/*   useEffect(() => {
-    fetchReservations();
-  }, []); */
+  });
 
   useEffect(() => {
-  fetchReservations();
-}, [fetchReservations]);
+    fetchReservations();
+  }, [fetchReservations]);
+
+
 
   // ✅ Filtrage dynamique
   useEffect(() => {
